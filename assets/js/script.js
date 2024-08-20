@@ -14,11 +14,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  document.getElementById("answer-box").addEventListener("keydown", function(event){
-    if (event.key === "Enter"){
-      checkAnswer();
-    }
-  });
+  document
+    .getElementById("answer-box")
+    .addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        checkAnswer();
+      }
+    });
 
   runGame("addition");
 });
@@ -43,6 +45,8 @@ function runGame(gameType) {
     displayMultiplyQuestion(num1, num2);
   } else if (gameType === "subtract") {
     displaySubtractQuestion(num1, num2);
+  } else if (gameType === "division") {
+    displayDivideQuestion(num1, num2);
   } else {
     alert(`unknown game type!: ${gameType}`);
     throw `unknown game type: ${gameType}, Aborting!`;
@@ -89,6 +93,9 @@ function calculateCorrectAnswer() {
     return [operand1 * operand2, "multiply"];
   } else if (operator === "-") {
     return [operand1 - operand2, "subtract"];
+  }
+  else if (operator === "/") {
+    return [operand1 / operand2, "division"];
   } else {
     alert(`unimplemented operator: ${operator}`);
     throw `unimplemented operator: ${operator}, Aborting!`;
@@ -153,4 +160,18 @@ function displayMultiplyQuestion(operand1, operand2) {
 
 //function that student needs to code
 
-function displayDivideQuestion() {}
+/**
+ * 
+ * @param {*} operand1 
+ * @param {*} operand2
+ * divide @param {*} operand1 * (@param {*} operand2 * factor) by @param {*} operand2
+ * factor is a random number between 1 and 4 
+ */
+function displayDivideQuestion(operand1, operand2) {
+  //create a factor to add to the division
+  // keeps divions whole
+  let factor = Math.floor(Math.random() * 4) + 1;
+  document.getElementById("operand1").textContent = operand1*(operand2*factor);
+  document.getElementById("operand2").textContent = operand2;
+  document.getElementById("operator").textContent = "/";
+}
