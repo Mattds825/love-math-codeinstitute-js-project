@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function(){
         // add event listener to each button
         button.addEventListener("click", function(){
             if(this.getAttribute("data-type")=="submit"){
-                alert("you've clicked submit");
+                checkAnswer();
             } else{
                 let gameType = this.getAttribute("data-type");
                 runGame(gameType);
@@ -34,12 +34,45 @@ function runGame(gameType){
     }
 }
 
-
+/**
+ * Check the answer against the first element in
+ * the returned calculateCorrectAnswer array
+ * continue the game with the same gameType
+ */
 function checkAnswer(){
+    let userAnswer = parseInt(document.getElementById("answer-box").value);
+    let calculatedAnswer = calculateCorrectAnswer(); // aray that holds the correct answer and the operator for next game
+    let isCorrect = userAnswer === calculatedAnswer[0];
 
+    if (isCorrect){
+        alert("Hey! You got it right! :D");
+    }else{
+        alert(`Awww... You answered: ${userAnswer}. The correct Answer was ${calculatedAnswer[0]} :(`);
+    }
+
+    // continue the game with the same gameType
+    runGame(calculatedAnswer[1]);
+
+    //clear the input
+    document.getElementById("answer-box").value = "";
 }
 
+/**
+ * Get operands (the numbers) and the operator directly from the dom
+ * return the correct answer
+ * return an array that holds the correct answer and the operator for next game
+ */
 function calculateCorrectAnswer(){
+    let operand1 = parseInt(document.getElementById('operand1').innerText);
+    let operand2 = parseInt(document.getElementById('operand2').innerText);
+    let operator = document.getElementById("operator").innerText;
+
+    if (operator === "+"){
+        return [operand1+operand2, "addition"];
+    }else{
+        alert(`unimplemented operator: ${operator}`);
+        throw(`unimplemented operator: ${operator}, Aborting!`);
+    }
 
 }
 
@@ -50,8 +83,16 @@ function incrementScore(){
 function incrementWrongAnswer(){
 
 }
-
+/**
+ * 
+ * @param {*} operand1 used as first operand in the equation
+ * @param {*} operand2 used as second operand in the equation
+ * add @param {*} operand1 and @param {*} operand2
+ * operand1 and operand2 are displayed in the html
+ * operator is set to "+"
+ */
 function displayAdditionQuestion(operand1, operand2){
+
     document.getElementById('operand1').textContent = operand1;
     document.getElementById('operand2').textContent = operand2;
     document.getElementById('operator').textContent = "+";
