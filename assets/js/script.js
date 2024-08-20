@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function(){
     let buttons = document.getElementsByTagName("button");
 
     for (let button of buttons){
+        // add event listener to each button
         button.addEventListener("click", function(){
             if(this.getAttribute("data-type")=="submit"){
                 alert("you've clicked submit");
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 function runGame(){
-
+    
 }
 
 function checkAnswer(){
